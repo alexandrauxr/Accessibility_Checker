@@ -1,0 +1,13 @@
+{// Hide these folders and files from both the Explorer and Pylance, Ai helped me because it kept analyzing files.
+"files.exclude": {
+    "**/venv": true,
+    "**/__pycache__": true,
+    "**/*.pyc": true
+  },
+  "python.analysis.exclude": [
+    "**/venv/**",
+    "**/__pycache__/**"
+  ],
+  // Optional: stop Pylance from rescanning the whole project
+  "python.analysis.indexing": false
+}
