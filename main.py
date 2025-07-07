@@ -1,6 +1,7 @@
 from url_validator import valid_url, is_reachable
 from page_loader   import load_page_data
 from accesibility_analyzer import check_contrast, check_typography, check_alt_text, check_heading_structure, check_link_buttons
+from result_formatter import build_contrast_df, get_contrast_json, format_typography_results, get_typography_json, build_typography_df, format_alt_text_results, build_alt_text_df, get_alt_text_json
 
 # Get the URL
 def get_url(): # User will be prompted to insert website link
@@ -58,8 +59,20 @@ def check_site():
                 "AA=" + contrast_result["AA"] + " " +
                 "AAA=" + contrast_result["AAA"]
             )
-    
-    # typography 
+
+    # Pandas DF
+    df = build_contrast_df(results)
+    print(df.to_markdown(index=False))
+  
+    # Save to CSV for later to report
+    df.to_csv('contrast_results.csv', index=False)
+
+    # Prepare JSON for front-end
+    json_payload = get_contrast_json(results)
+
+
+
+    # typography --------------------------------
     
     typo_results = check_typography(data["texts"])
     print("Got total:", len(typo_results), "typography results")
@@ -84,6 +97,16 @@ def check_site():
         status  = text_results["WCAG"]
         print(f"{tag} | '{snippet}' | {size_px}px | WCAG={status}")
     
+    # Pandas DF
+    format_typography_results(typo_results)
+
+    # Save CSV for later to reports
+    df_typo = build_typography_df (typo_results)
+    df_typo.to_csv('typography_results.csv', index=False)
+
+    # JSON for front-end
+    json_typo = get_typography_json(typo_results)
+    
     # Alt check image 
     alt_results = check_alt_text(data["images"])
     print("Alt-text results:")
@@ -91,7 +114,19 @@ def check_site():
         src_label = img_alt["src"].split("/")[-1]
         print(f"{src_label}: {img_alt['status']}")
     
-    # Heading Checker
+    
+    # Pandas DF 
+    format_alt_text_results(alt_results)
+
+    # Export CSV
+    df_alt = build_alt_text_df(alt_results)
+    df_alt.to_csv('alt_text_results.csv', index=False)
+
+    # JSON for front end 
+    json_alt = get_alt_text_json(alt_results)
+    
+
+    # Heading Checker------------------------------------------------------
     heading_warnings = check_heading_structure(data["texts"])
 
     print("Heading structure warnings:")
@@ -101,7 +136,8 @@ def check_site():
         for warning in heading_warnings:
             print(" • " + warning)
     
-    # Button checker
+    
+    # Button checker --------------------------------------------------
     btn_failures = check_link_buttons(data["buttons"])
     print("Missing link/button labels:")
     if not btn_failures:
