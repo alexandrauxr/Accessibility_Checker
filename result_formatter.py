@@ -89,3 +89,40 @@ def get_alt_text_json(results):
     df = build_alt_text_df(results)
     return df.to_dict(orient='records')
 
+# Heading structure formatters ----------
+
+def build_heading_df(results):
+    columns_heading = ['warning']
+    if not results:
+        return pd.DataFrame(columns=columns_heading)
+    return pd.DataFrame({ 'warning': results })
+
+def format_heading_results(results):
+    df = build_heading_df(results)
+    if df.empty:
+        print("All headings are in good order!")
+        return
+    print(df.to_markdown(index=False))
+
+def get_heading_json(results):
+    df = build_heading_df(results)
+    return df.to_dict(orient='records')
+
+# Buttor Formatters ---------------
+def build_button_df(failures):
+    columns_buttons = ['label', 'status']
+    if not failures:
+        return pd.DataFrame(columns=columns_buttons)
+    return pd.DataFrame(failures)[columns_buttons]
+
+def format_button_results(failures):
+    df = build_button_df(failures)
+
+    if df.empty:
+        print("All buttons have text or aria-labels")
+    else:
+        print("Missing link/button labels:")
+        print(df.to_markdown(index=False))
+
+def get_button_json(failures):
+    return build_button_df(failures).to_dict(orient='records')

@@ -1,7 +1,7 @@
 from url_validator import valid_url, is_reachable
 from page_loader   import load_page_data
 from accesibility_analyzer import check_contrast, check_typography, check_alt_text, check_heading_structure, check_link_buttons
-from result_formatter import build_contrast_df, get_contrast_json, format_typography_results, get_typography_json, build_typography_df, format_alt_text_results, build_alt_text_df, get_alt_text_json
+from result_formatter import build_contrast_df, get_contrast_json, format_typography_results, get_typography_json, build_typography_df, format_alt_text_results, build_alt_text_df, get_alt_text_json, format_heading_results, build_heading_df, get_heading_json, format_button_results,get_button_json
 
 # Get the URL
 def get_url(): # User will be prompted to insert website link
@@ -136,6 +136,14 @@ def check_site():
         for warning in heading_warnings:
             print(" • " + warning)
     
+    # Result Formatter for Heading
+    heading_warnings = check_heading_structure(data["texts"])
+    format_heading_results(heading_warnings)
+    df_heading = build_heading_df(heading_warnings)
+    df_heading.to_csv('heading_warnings.csv', index=False)
+    json_heading = get_heading_json(heading_warnings)
+
+    
     
     # Button checker --------------------------------------------------
     btn_failures = check_link_buttons(data["buttons"])
@@ -145,6 +153,11 @@ def check_site():
     else:
         for fail in btn_failures:
             print(f"{fail['label']}: {fail['status']}")
+    #Results Formatter for button
+    btn_failures = check_link_buttons(data["buttons"])
+    format_button_results(btn_failures)
+    json_button = get_button_json(btn_failures)
+
 
 if __name__ == "__main__":
     check_site()
