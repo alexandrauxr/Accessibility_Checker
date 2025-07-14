@@ -76,3 +76,4 @@ if run_audit:
                     st.info("No typography issues!")
                 else:
                     st.table(df_typo)
+            
