@@ -17,6 +17,8 @@ def build_contrast_df(results):
         return label
 
     df_contrast['label'] = df_contrast.apply(make_label, axis=1)
+    #df_contrast['label'] = df_contrast['label'].apply(lambda x: x[:20])
+    #df_contrast['snippet'] = df_contrast['snippet'].apply(lambda x: x[:30])
 
     # return only desired columns
     return df_contrast[['snippet', 'label', 'ratio', 'AA', 'AAA']]
@@ -109,14 +111,14 @@ def get_heading_json(results):
     return df.to_dict(orient='records')
 
 # Buttor Formatters ---------------
-def build_button_df(failures):
-    columns_buttons = ['label', 'status']
-    if not failures:
+def build_button_df(results):
+    columns_buttons = ['label', 'snippet', 'reason', 'status']
+    if not results:
         return pd.DataFrame(columns=columns_buttons)
-    return pd.DataFrame(failures)[columns_buttons]
+    return pd.DataFrame(results)[columns_buttons]
 
-def format_button_results(failures):
-    df = build_button_df(failures)
+def format_button_results(results):
+    df = build_button_df(results)
 
     if df.empty:
         print("All buttons have text or aria-labels")
@@ -124,5 +126,5 @@ def format_button_results(failures):
         print("Missing link/button labels:")
         print(df.to_markdown(index=False))
 
-def get_button_json(failures):
-    return build_button_df(failures).to_dict(orient='records')
+def get_button_json(results):
+    return build_button_df(results).to_dict(orient='records')

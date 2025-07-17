@@ -88,10 +88,7 @@ def check_alt_text(images):
     return results 
 
 #Heading Structure Checker -------------------------------------------------------
-def check_heading_structure(texts):
-    # Extract headings H1–H6
-    valid_levels = {"H1","H2","H3","H4","H5","H6"}
-    headings = [item for item in texts if item.get("tag","").upper() in valid_levels]
+def check_heading_structure(headings):
 
     warnings = []
 
@@ -115,13 +112,33 @@ def check_heading_structure(texts):
 
 # Button Checker ---------------------------------
 def check_link_buttons(elements):
-    failures = []
+    results = []
     for el in elements:
         text = el["text"].strip()
         aria = el["aria"].strip()
 
-        if not text and not aria:
-            label = el["tag"]
-            failures.append({"label": label, "status": "Fail"})
+        label = el["tag"]
+        if el.get("id"):
+            label += f"#{el['id']}"
+        elif el.get("classes"):
+            label += f".{el['classes']}"
 
-    return failures
+        snippet = text if text else '""'
+        
+        if not text and not aria:
+            results.append({
+            "label": label,
+            "snippet": snippet,
+            "reason": "No text or aria-label",
+            "status": "Fail"
+        })
+    
+        else:
+            results.append({
+            "label": label,
+            "snippet": snippet,
+            "reason": "-",
+            "status": "Pass"
+        })
+
+    return results
