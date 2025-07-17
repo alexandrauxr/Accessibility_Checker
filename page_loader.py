@@ -44,7 +44,9 @@ def load_page_data(url, viewport=None):
         headings = []
         for h in heading_elems:
             try:
-                headings.append(h.inner_text().strip())
+                tag = h.evaluate("el => el.tagName")
+                text = h.inner_text().strip()
+                headings.append({"tag": tag, "text": text})
             except:
                 continue
 
