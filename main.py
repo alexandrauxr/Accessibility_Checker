@@ -72,7 +72,7 @@ def check_site():
 
 
 
-    # typography --------------------------------
+    # Typography --------------------------------
     
     typo_results = check_typography(data["texts"])
     print("Got total:", len(typo_results), "typography results")
@@ -126,7 +126,7 @@ def check_site():
     json_alt = get_alt_text_json(alt_results)
     
 
-    # Heading Checker------------------------------------------------------
+    # Heading Checker ------------------------------------------------------
     heading_warnings = check_heading_structure(data["texts"])
 
     print("Heading structure warnings:")

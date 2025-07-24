@@ -75,7 +75,7 @@ def check_typography(texts, min_px=16):
         })
     return results
 
-#Alt Text Checker for Images -------------------------------------------------------
+# Alt Text Checker for Images -------------------------------------------------------
 def check_alt_text(images):
     results = []
     for img in images:
@@ -87,7 +87,7 @@ def check_alt_text(images):
         results.append({"src": img.get("src", ""), "alt": alt, "status": status})
     return results 
 
-#Heading Structure Checker -------------------------------------------------------
+# Heading Structure Checker -------------------------------------------------------
 def check_heading_structure(headings):
 
     warnings = []
