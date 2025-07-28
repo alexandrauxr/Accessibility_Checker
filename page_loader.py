@@ -62,23 +62,23 @@ def load_page_data(url, viewport=None):
             tag = el.evaluate("e => e.tagName")
 
     # 2) Try to grab visible text
-        try:
-            text = el.inner_text().strip()
-        except:
-            text = ""
+            try:
+                text = el.inner_text().strip()
+            except:
+                text = ""
 
     # 3) Try to grab aria-label (or empty string if none) AI helped me 
-        try:
-            aria = el.get_attribute("aria-label") or ""
-        except:
-            aria = ""
+            try:
+                aria = el.get_attribute("aria-label") or ""
+            except:
+                aria = ""
 
     # 4) Store all three in a dict
-        buttons.append({
-        "tag": tag,
-        "text": text,
-        "aria": aria
-    })
+            buttons.append({
+                "tag": tag,
+                "text": text,
+             "aria": aria
+            })
 
         browser.close()
 
