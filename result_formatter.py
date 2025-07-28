@@ -78,6 +78,10 @@ def build_typography_warning_df(results):
     df = build_typography_df(results)
     return df[df['WCAG'] == 'Warning']
 
+def build_typography_fail_df(results):
+    df = build_typography_df(results)
+    return df[df['WCAG'] == 'Fail']
+
 
 def format_typography_results(results):
     df = build_typography_df(results)

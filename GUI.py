@@ -3,7 +3,7 @@ from url_validator import valid_url, is_reachable
 from playwright._impl._errors import TimeoutError
 from page_loader import load_page_data
 from accesibility_analyzer import check_contrast, check_typography, check_alt_text, check_heading_structure, check_link_buttons
-from result_formatter import (build_contrast_all_df, build_contrast_pass_df,build_contrast_fail_df, build_typography_all_df,build_typography_warning_df, build_typography_pass_df, build_alt_text_all_df,build_alt_text_fail_df,build_alt_text_pass_df, build_button_all_df ,build_button_fail_df,build_button_pass_df)
+from result_formatter import (build_contrast_all_df, build_contrast_pass_df,build_contrast_fail_df, build_typography_all_df,build_typography_warning_df, build_typography_pass_df,build_typography_fail_df, build_alt_text_all_df,build_alt_text_fail_df,build_alt_text_pass_df, build_button_all_df ,build_button_fail_df,build_button_pass_df)
 import time
 
 
@@ -51,13 +51,7 @@ if run_audit:
             try:
                 with st.spinner("Loading page data..."):
                     data = load_page_data(url_input)
-            except TimeoutError:
-                st.error(
-                "Please click **Run Accessibility Audit** again to retry.")
-                st.stop()
 
-            with st.spinner("Loading page data..."):
-                data = load_page_data(url_input)
                 html = data["html"]
                 texts = data["texts"]
                 headings = data["headings"]
@@ -70,10 +64,13 @@ if run_audit:
                 st.session_state.alt_results         = check_alt_text(data["images"])
                 st.session_state.heading_warnings    = check_heading_structure(data["headings"])
                 st.session_state.button_results      = check_link_buttons(data["buttons"])
-
-            load_placeholder.success("✅ Page data loaded successfully!")
+                load_placeholder.success("✅ Page data loaded successfully!")
+            except Exception:
+                st.error(f"Failed to load page data: Please click 'Run Accessibility Audit' again to retry.")
+                st.stop()
+                
 reach_placeholder.empty()
-load_placeholder.empty()
+#load_placeholder.empty()---- Has a comment for now may delete later
 
 if "contrast_results" in st.session_state:
             
@@ -107,7 +104,7 @@ if "contrast_results" in st.session_state:
         
         view = st.radio(
         "Show:",
-        ["All", "Pass Only", "Warning Only"],
+        ["All", "Pass Only", "Warning Only","Fail Only"],
         index=0,
         horizontal=True,
         key="typo_view")
@@ -117,11 +114,13 @@ if "contrast_results" in st.session_state:
             df = build_typography_all_df(results)
         elif view == "Pass Only":
             df = build_typography_pass_df(results)
-        else:  
+        elif view == "Warning Only":
             df = build_typography_warning_df(results)
+        else:  
+            df = build_typography_fail_df(results)
         
         if df.empty:
-            empty_msgs = {"All": "No typography issues!", "Pass Only":  "No passing rows!", "Warning Only":  "No warning rows!",}
+            empty_msgs = {"All": "No typography issues!", "Pass Only":  "No passing rows!", "Warning Only":  "No warnings, they all passed!","Fail Only":"No failed rows",}
             st.info(empty_msgs[view])
         else:
             st.dataframe(df.reset_index(drop=True))

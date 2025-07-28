@@ -51,17 +51,20 @@ def parse_px(text_size):
     except:
         return None
 
-def check_typography(texts, min_px=16):
+def check_typography(texts):
     results = []
     for item in texts:
         size_px = parse_px(item.get("size", "")) # we do empty string so it can return something
-        if size_px is None:
+        if size_px is None or item.get("tag", "").lower() == "footer":
             continue  # skip anything we can’t read
 
         # WCAG recommends at least 16px body text for readability
-        wcag_pass = "Pass" if size_px >= 16 else "Warning"
-        if item.get("tag", "").lower() == "footer":
-            continue
+        if size_px >= 16:
+            status = "Pass"
+        elif size_px >= 12: 
+            status = "Warning"
+        else: 
+            status = "Fail"
 
         snippet = item["text"][:30] + ("…" if len(item["text"]) > 30 else "") #AI helped
 
@@ -71,7 +74,7 @@ def check_typography(texts, min_px=16):
             "classes": (item.get("classes","").split()[0] if item.get("classes") else ""),
             "snippet": snippet,
             "size_px": size_px,
-            "WCAG": wcag_pass
+            "WCAG": status
         })
     return results
 
