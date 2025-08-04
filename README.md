@@ -20,7 +20,7 @@ Here is a step by step!
 6. If you want to do check another webpage just insert a new URL and run it again.
 
 > [!TIP]
-> Occasionally, if the page takes too long to load the app would show an error. It is designed to prompt message to click the Run Accessibility Checker button again. If the message does not appear, retrying the button manually should fix the issue. 
+> Occasionally, if the page takes too long to load the app would show an error. It is designed to prompt a message to click the **Run Accessibility Checker** button again. If the message does not appear, retrying the button manually should fix the issue. 
 
 
 
