@@ -1,5 +1,20 @@
-# page_loader.py AI helped 
+# Input handler URL validator: Checks if URL format is correct and if the site is reachable.
 
+import re
+import requests
+
+def valid_url(url):
+    return bool(re.match(r"^(http|https)://", url))
+
+def is_reachable(url):
+    try:
+        resp = requests.head(url, allow_redirects=True, timeout=5)
+        return resp.status_code < 400
+    except requests.RequestException:
+        return False
+    
+
+# Page Loader: Loads page content and extracts relevant elements for analysis.
 from playwright.sync_api import sync_playwright
 
 def load_page_data(url, viewport=None):
@@ -39,7 +54,7 @@ def load_page_data(url, viewport=None):
                 "size":     size,
                 "weight":   weight
             })
-     # 2) Headings (H1–H6)
+     # Headings (H1–H6)
         heading_elems = page.query_selector_all("h1, h2, h3, h4, h5, h6")
         headings = []
         for h in heading_elems:
@@ -50,7 +65,7 @@ def load_page_data(url, viewport=None):
             except:
                 continue
 
-        # 3) Images (collecting src)
+        # Images (collecting src)
         image_elems = page.query_selector_all("img")
         images = []
         for img in image_elems:
@@ -61,19 +76,19 @@ def load_page_data(url, viewport=None):
         for el in link_btn_elems:
             tag = el.evaluate("e => e.tagName")
 
-    # 2) Try to grab visible text
+    # Try to grab visible text
             try:
                 text = el.inner_text().strip()
             except:
                 text = ""
 
-    # 3) Try to grab aria-label (or empty string if none) AI helped me 
+    # Try to grab aria-label (or empty string if none) AI helped me 
             try:
                 aria = el.get_attribute("aria-label") or ""
             except:
                 aria = ""
 
-    # 4) Store all three in a dict
+    # Store all three in a dict
             buttons.append({
                 "tag": tag,
                 "text": text,

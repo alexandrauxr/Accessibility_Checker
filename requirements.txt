@@ -1,0 +1,5 @@
+streamlit>=1.0
+playwright>=1.30.0
+requests>=2.25
+wcag-contrast-ratio>=0.4
+pandas>=1.3

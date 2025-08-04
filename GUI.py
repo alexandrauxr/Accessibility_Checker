@@ -1,7 +1,6 @@
 import streamlit as st
-from url_validator import valid_url, is_reachable
 from playwright._impl._errors import TimeoutError
-from page_loader import load_page_data
+from page_loader import load_page_data, valid_url, is_reachable
 from accesibility_analyzer import check_contrast, check_typography, check_alt_text, check_heading_structure, check_link_buttons
 from result_formatter import (build_contrast_all_df, build_contrast_pass_df,build_contrast_fail_df, build_typography_all_df,build_typography_warning_df, build_typography_pass_df,build_typography_fail_df, build_alt_text_all_df,build_alt_text_fail_df,build_alt_text_pass_df, build_button_all_df ,build_button_fail_df,build_button_pass_df)
 import time
