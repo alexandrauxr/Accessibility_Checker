@@ -20,7 +20,8 @@ Here is a step by step!
 6. If you want to do check another webpage just insert a new URL and run it again.
 
 > [!TIP]
-> If data fetching times out, simply click the **Run Accessibility Audit** button again. An error message will usually appear prompting you to retry, if it doesn't just click the button again. 
+> Occasionally, if the page takes too long to load the app would show an error. It is designed to prompt message to click the Run Accessibility Checker button again. If the message does not appear, retrying the button manually should fix the issue. 
+
 
 
 ## App Screenshots 
