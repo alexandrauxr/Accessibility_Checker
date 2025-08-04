@@ -1,4 +1,4 @@
-# Accesibility Checker (User's Guide)
+# Accessibility Checker (User's Guide)
 Accessibility Checker is a web-based tool for testing one page at a time accessibility against WCAG standards for contrast, typography, alt text, headings, and buttons.
 
 ## Before Running the App 
