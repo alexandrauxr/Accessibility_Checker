@@ -6,17 +6,17 @@ from result_formatter import (build_contrast_all_df, build_contrast_pass_df,buil
 import time
 
 
-st.set_page_config(page_title="Accessibility Analyzer", layout="centered")
+st.set_page_config(page_title="Accessibility Checker", layout="centered")
 
 
-st.title("Accessibility Audit")
+st.title("Accessibility Checker")
 
 st.write("Test your website's accessibility against WCAG standards for contrast, typography, alt text, headings, and buttons.")
 
 st.subheader("How it works:")
 st.write("""
 1. Enter the website URL you want to audit.  
-2. Click the Run Accessibility Audit button to start the analysis.  
+2. Click the Run Accessibility Checker button to start the analysis.  
 3. Review results by category.
 """)
 
@@ -27,7 +27,7 @@ url_input = st.text_input("", placeholder="https://example.com")
 
 col1, col2, col3 = st.columns(3)
 with col2:
-    run_audit = st.button("Run Accessibility Audit")
+    run_audit = st.button("Run Accessibility Checker")
 
 reach_placeholder = st.empty()
 load_placeholder  = st.empty()
