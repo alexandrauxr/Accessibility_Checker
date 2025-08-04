@@ -9,8 +9,8 @@ Accessibility Checker is a web-based tool for testing one page at a time accessi
 Here is a step by step!
 1. Open your terminal make sure you are in your virtual enviroment and run: streamlit run main.py
 2. Enter the full URL of the webpage you want to audit (must start with http:// or https://).
-3. Click the “Run Accessibility Checker” button.
-4. Review the results are shown in table format with tabs:
+3. Click the **“Run Accessibility Checker”** button.
+4. Review the results shown in table format with tabs:
     - Contrast: Check if text and background colors meet WCAG AA/AAA standards.
     - Typography: Highlights fonts smaller than 16px.
     - Alt Text: Flags images missing alt text.
