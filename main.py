@@ -98,7 +98,7 @@ if "contrast_results" in st.session_state:
     with tab2:
         st.subheader("Typography Check")
         st.markdown("Verifies that all text is at least 16 px—the commonly accepted baseline for readability—"
-        "since WCAG doesn't mandate an exact pixel size; any smaller font is flagged as a warning.")
+        "since WCAG doesn't mandate an exact pixel size; any font smaller than 12px is a fail.")
 
         
         view = st.radio(
