@@ -11,7 +11,7 @@ st.set_page_config(page_title="Accessibility Checker", layout="centered")
 
 st.title("Accessibility Checker")
 
-st.write("Test your website's accessibility against WCAG standards for contrast, typography, alt text, headings, and buttons.")
+st.write("Test your website's accessibility against WCAG standards for contrast, typography, alt text, headings, and buttons/links.")
 
 st.subheader("How it works:")
 st.write("""
